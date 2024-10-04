@@ -2,7 +2,7 @@ import React from 'react';
 import { Space, Table, Tag } from 'antd';
 const columns = [
   {
-    title: 'Codigo',
+    title: 'Name',
     dataIndex: 'name',
     key: 'name',
     render: (text) => <a>{text}</a>,
@@ -65,41 +65,6 @@ const data = [
   },
   {
     key: '3',
-    name: 'Joe Black',
-    age: 32,
-    address: 'Sydney No. 1 Lake Park',
-    tags: ['cool', 'teacher'],
-  },
-  {
-    key: '4',
-    name: 'Joe Black',
-    age: 32,
-    address: 'Sydney No. 1 Lake Park',
-    tags: ['cool', 'teacher'],
-  },
-  {
-    key: '5',
-    name: 'Joe Black',
-    age: 32,
-    address: 'Sydney No. 1 Lake Park',
-    tags: ['cool', 'teacher'],
-  },
-  {
-    key: '6',
-    name: 'Joe Black',
-    age: 32,
-    address: 'Sydney No. 1 Lake Park',
-    tags: ['cool', 'teacher'],
-  },
-  {
-    key: '7',
-    name: 'Joe Black',
-    age: 32,
-    address: 'Sydney No. 1 Lake Park',
-    tags: ['cool', 'teacher'],
-  },
-  {
-    key: '8',
     name: 'Joe Black',
     age: 32,
     address: 'Sydney No. 1 Lake Park',
