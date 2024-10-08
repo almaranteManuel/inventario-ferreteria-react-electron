@@ -1,10 +1,11 @@
 import React from 'react';
+import SupplierList from '../components/suppliers/SupplierList';
 
 function Suppliers() {
   return (
     <div>
-      <h2>Proveedores</h2>
-      {/* Aquí irá el contenido de la pantalla de proveedores */}
+      <h1 style={{textAlign: 'center'}}>Gestión de proveedores</h1>
+      <SupplierList />
     </div>
   );
 }

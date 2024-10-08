@@ -1,12 +1,13 @@
 import React from 'react';
+import SaleList from '../components/sales/SaleList';
 
-function Sales() {
+function Purchases() {
   return (
     <div>
-      <h2>Ventas</h2>
-      {/* Aquí irá el contenido de la pantalla de ventas */}
+      <h1 style={{textAlign: 'center'}}>Gestión de ventas</h1>
+      <SaleList />
     </div>
   );
 }
 
-export default Sales;
+export default Purchases;

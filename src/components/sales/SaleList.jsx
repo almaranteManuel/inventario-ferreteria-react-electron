@@ -1,24 +1,24 @@
 import React, { useEffect, useState } from 'react';
 import { Table, Button, Space } from 'antd';
 
-const PurchaseList = () => {
-  const [purchases, setPurchases] = useState([]);
+const SaleList = () => {
+  const [sales, setSales] = useState([]);
 
 
   // Función para cargar productos desde la API de Electron
   useEffect(() => {
-    const loadPurchases = async () => {
+    const loadSales = async () => {
       try {
-        const PurchaseList = await window.api.loadPurchases();
-        //console.log(PurchaseList);
-        setPurchases(PurchaseList);
+        const SaleList = await window.api.loadSales();
+        //console.log(SaleList);
+        setSales(SaleList);
 
       } catch (error) {
         console.error('Error loading suppliers:', error);
       }
     };
 
-    loadPurchases();
+    loadSales();
   }, []);
 
   // Define las columnas de la tabla
@@ -52,9 +52,9 @@ const PurchaseList = () => {
 
   return (
   <>
-  <Table columns={columns} dataSource={purchases} pagination={{ pageSize: 20 }} rowHoverable={true} />
+  <Table columns={columns} dataSource={sales} pagination={{ pageSize: 20 }} rowHoverable={true} />
   </>
   );
 };
 
-export default PurchaseList;
+export default SaleList;

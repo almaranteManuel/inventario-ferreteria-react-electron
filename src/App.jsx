@@ -5,12 +5,15 @@ import {
   TruckOutlined,
   ShoppingCartOutlined,
 } from '@ant-design/icons';
-import { Layout, Menu, theme } from 'antd';
+import { Layout, Menu, theme, ConfigProvider } from 'antd';
 import { Link, BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Products from './pages/Products';
 import Suppliers from './pages/Suppliers';
 import Sales from './pages/Sales';
 import Purchases from './pages/Purchases';
+import Reports from './pages/Reports';
+import locale from 'antd/es/locale/es_ES';
+import 'moment/locale/es';
 import './App.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 
@@ -42,6 +45,7 @@ const items = [
   getItem(<Link to="/Suppliers">Proveedores</Link>, '2', <TruckOutlined />),
   getItem(<Link to="/Sales">Ventas</Link>, '3', <CreditCardOutlined />),
   getItem(<Link to="/Purchases">Compras</Link>, '4', <ShoppingCartOutlined />),
+  getItem(<Link to="/Reports">Reportes</Link>, '5', <ShoppingCartOutlined />),
 ];
 
 const App = () => {
@@ -52,37 +56,40 @@ const App = () => {
   } = theme.useToken();
 
   return (
-    <Router>
-      <Layout hasSider>
-        {/* Sider (barra lateral) */}
-        <Sider collapsible collapsed={collapsed} onCollapse={(value) => setCollapsed(value)} style={siderStyle}>
-          <div className="demo-logo-vertical" />
-          <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline" items={items} />
-        </Sider>
+    <ConfigProvider locale={locale}>
+      <Router>
+        <Layout hasSider>
+          {/* Sider (barra lateral) */}
+          <Sider collapsible collapsed={collapsed} onCollapse={(value) => setCollapsed(value)} style={siderStyle}>
+            <div className="demo-logo-vertical" />
+            <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline" items={items} />
+          </Sider>
 
-        <Layout style={{ marginLeft: collapsed ? 80 : 200, minHeight: '100vh' }}>
-          {/* Header */}
-          <Header style={{ padding: 0, background: colorBgContainer }} />
+          <Layout style={{ marginLeft: collapsed ? 80 : 200, minHeight: '100vh' }}>
+            {/* Header */}
+            <Header style={{ padding: 0, background: colorBgContainer }} />
 
-          {/* Content principal */}
-          <Content
-            style={{
-              padding: 24,
-              background: colorBgContainer,
-              flexGrow: 1, // Para que ocupe todo el espacio restante
-            }}
-          >
-            {/* Rutas del contenido */}
-            <Routes>
-              <Route path="/Products" element={<Products />} />
-              <Route path="/Suppliers" element={<Suppliers />} />
-              <Route path="/Sales" element={<Sales />} />
-              <Route path="/Purchases" element={<Purchases />} />
-            </Routes>
-          </Content>
+            {/* Content principal */}
+            <Content
+              style={{
+                padding: 24,
+                background: colorBgContainer,
+                flexGrow: 1, // Para que ocupe todo el espacio restante
+              }}
+            >
+              {/* Rutas del contenido */}
+              <Routes>
+                <Route path="/Products" element={<Products />} />
+                <Route path="/Suppliers" element={<Suppliers />} />
+                <Route path="/Sales" element={<Sales />} />
+                <Route path="/Purchases" element={<Purchases />} />
+                <Route path="/Reports" element={<Reports />} />
+              </Routes>
+            </Content>
+          </Layout>
         </Layout>
-      </Layout>
-    </Router>
+      </Router>
+    </ConfigProvider>
   );
 };
 

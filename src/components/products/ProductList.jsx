@@ -1,110 +1,133 @@
-import React from 'react';
-import { Space, Table, Tag } from 'antd';
-const columns = [
-  {
-    title: 'Codigo',
-    dataIndex: 'name',
-    key: 'name',
-    render: (text) => <a>{text}</a>,
-  },
-  {
-    title: 'Age',
-    dataIndex: 'age',
-    key: 'age',
-  },
-  {
-    title: 'Address',
-    dataIndex: 'address',
-    key: 'address',
-  },
-  {
-    title: 'Tags',
-    key: 'tags',
-    dataIndex: 'tags',
-    render: (_, { tags }) => (
-      <>
-        {tags.map((tag) => {
-          let color = tag.length > 5 ? 'geekblue' : 'green';
-          if (tag === 'loser') {
-            color = 'volcano';
-          }
-          return (
-            <Tag color={color} key={tag}>
-              {tag.toUpperCase()}
-            </Tag>
-          );
-        })}
-      </>
-    ),
-  },
-  {
-    title: 'Action',
-    key: 'action',
-    render: (_, record) => (
-      <Space size="middle">
-        <a>Invite {record.name}</a>
-        <a>Delete</a>
-      </Space>
-    ),
-  },
-];
-const data = [
-  {
-    key: '1',
-    name: 'John Brown',
-    age: 32,
-    address: 'New York No. 1 Lake Park',
-    tags: ['nice', 'developer'],
-  },
-  {
-    key: '2',
-    name: 'Jim Green',
-    age: 42,
-    address: 'London No. 1 Lake Park',
-    tags: ['loser'],
-  },
-  {
-    key: '3',
-    name: 'Joe Black',
-    age: 32,
-    address: 'Sydney No. 1 Lake Park',
-    tags: ['cool', 'teacher'],
-  },
-  {
-    key: '4',
-    name: 'Joe Black',
-    age: 32,
-    address: 'Sydney No. 1 Lake Park',
-    tags: ['cool', 'teacher'],
-  },
-  {
-    key: '5',
-    name: 'Joe Black',
-    age: 32,
-    address: 'Sydney No. 1 Lake Park',
-    tags: ['cool', 'teacher'],
-  },
-  {
-    key: '6',
-    name: 'Joe Black',
-    age: 32,
-    address: 'Sydney No. 1 Lake Park',
-    tags: ['cool', 'teacher'],
-  },
-  {
-    key: '7',
-    name: 'Joe Black',
-    age: 32,
-    address: 'Sydney No. 1 Lake Park',
-    tags: ['cool', 'teacher'],
-  },
-  {
-    key: '8',
-    name: 'Joe Black',
-    age: 32,
-    address: 'Sydney No. 1 Lake Park',
-    tags: ['cool', 'teacher'],
-  },
-];
-const App = () => <Table columns={columns} dataSource={data} />;
-export default App;
+import React, { useEffect, useState } from 'react';
+import { Table, Button, Space, Modal } from 'antd';
+import ProductSearch from './ProductSearch';
+import ProductForm from './ProductCreate';
+import ProductEdit from './ProductEdit';
+
+const { confirm } = Modal;
+
+const ProductList = () => {
+  const [products, setProducts] = useState([]);
+  const [filteredProducts, setFilteredProducts] = useState([]);
+
+  const loadProducts = async () => {
+    try {
+      const productList = await window.api.loadProducts();
+      setProducts(productList);
+      setFilteredProducts(productList); // Inicialmente muestra todos los productos
+    } catch (error) {
+      console.error('Error loading products:', error);
+    }
+  };
+  
+  // Función para cargar productos desde la API de Electron
+  useEffect(() => {
+    loadProducts();
+  }, []);
+
+  const handleProductAdded = async () => {
+    await loadProducts(); // Recargar la lista de productos después de agregar uno nuevo
+  };
+
+  const handleSearchResults = (results) => {
+    if (results.length === 0 ) {
+      setFilteredProducts([]);
+    } else {
+      const formattedResults = results.map((product) => ({
+        ...product.dataValues,
+        key: product.dataValues.id, // Añade un `key` único para cada fila
+      }));
+      setFilteredProducts(formattedResults);
+    }
+  }
+
+  const handleDeleteProduct = async (productId) => {
+    try {
+      await window.api.deleteProduct(productId);
+      loadProducts(); // Recargar la lista de productos después de eliminar uno
+    } catch (error) {
+      console.error('Error deleting product:', error);
+    }
+  };
+  const showDeleteConfirm = (productId) => {
+    confirm({
+      title: '¿Estás seguro de que deseas eliminar este producto?',
+      content: 'Esta acción no se puede deshacer.',
+      okText: 'Sí, eliminar',
+      okType: 'danger',
+      cancelText: 'Cancelar',
+      onOk() {
+        handleDeleteProduct(productId); // Eliminar el producto si se confirma
+      },
+      onCancel() {
+        console.log('Cancelado');
+      },
+    });
+  };
+
+  // Define las columnas de la tabla
+  const columns = [
+    {
+      title: 'Código',
+      dataIndex: 'code',
+      key: 'code',
+      render: (text) => <span style={{ fontWeight: 'bold', color: '#333' }}>{text}</span>,
+    },
+    {
+      title: 'Descripción',
+      dataIndex: 'description',
+      key: 'description',
+      render: (text) => <span style={{ fontWeight: 'bold', color: '#333' }}>{text}</span>,
+    },
+    {
+      title: 'Precio Mayorista',
+      dataIndex: 'price',
+      key: 'price',
+      render: (text) => <span style={{ fontWeight: 'bold', color: '#333' }}>$ {text}</span>,
+    },
+    {
+      title: 'Precio Minorista',
+      key: 'retailPrice',
+      render: (text, record) => (
+        <span style={{ fontWeight: 'bold', color: '#333' }}>
+          $ {(record.price * record.variant).toFixed(2)}
+        </span>
+      ),
+    },
+    {
+      title: 'Precio Propio',
+      key: 'own_price',
+      render: (text, record) => (
+        <span style={{ fontWeight: 'bold', color: '#333' }}>
+          {record.own_price ? ('$ ' + record.own_price) : 'No definido'}
+        </span>
+      ),
+    },
+    {
+      title: 'Acciones',
+      key: 'action',
+      render: (text, record) => (
+        <Space size="small">
+          <ProductEdit />
+          <Button onClick={() => showDeleteConfirm(record.key)} danger>
+            Borrar
+          </Button>
+        </Space>
+      ),
+    },
+  ];
+
+  return (
+  <>
+  <h2 style={{textAlign: 'center', fontSize: 'bold'}}>Total productos: {products.length}</h2>
+
+  <ProductForm onProductAdded={handleProductAdded} />
+
+  <ProductSearch onSearchResults={handleSearchResults} />
+
+  <Table columns={columns} dataSource={filteredProducts} pagination={{ pageSize: 20 }} rowHoverable={true} />
+  </>
+  );
+};
+
+export default ProductList;

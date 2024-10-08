@@ -1,14 +1,18 @@
 import { app, BrowserWindow } from 'electron';
 import path from 'path';
+import productRoutes from './backend/routes/productRoutes.js';
+import salesRoutes from './backend/routes/saleRoutes.js';
+import purchasesRoutes from './backend/routes/purchaseRoutes.js';
+import suppliersRoutes from './backend/routes/supplierRoutes.js';
 
 function createWindow() {
   const win = new BrowserWindow({
     width: 800,
     height: 600,
     webPreferences: {
-      //preload: path.join(process.cwd(), 'preload.js'), // Asegúrate de que el preload.js está en la raíz
+      preload: path.join(process.cwd(), './preload.mjs'),
       nodeIntegration: true,
-      contextIsolation: false, // Puede ser necesario para permitir nodeIntegration
+      contextIsolation: true,
     },
   });
 
@@ -21,6 +25,10 @@ function createWindow() {
 
 app.whenReady().then(() => {
   createWindow();
+  productRoutes();
+  salesRoutes();
+  purchasesRoutes();
+  suppliersRoutes();
 
   app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) {

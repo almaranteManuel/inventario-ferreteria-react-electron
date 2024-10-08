@@ -1,10 +1,11 @@
 import ProductList from '../components/products/ProductList';
+import ProductCreate from '../components/products/ProductCreate';
 
-function Products() {
+
+const Products = () => {
   return (
     <div>
-      <h2>Productos</h2>
-      <h3>Total productos</h3>
+      <h1 style={{textAlign: 'center'}}>Gestión de productos</h1>
       <ProductList />
     </div>
   );
