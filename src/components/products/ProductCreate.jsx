@@ -72,6 +72,8 @@ const ProductForm = ({onProductAdded}) => {
         open={isModalOpen}
         onOk={handleOk}
         onCancel={handleCancel}
+        okText="Guardar"
+        cancelText="Cancelar"
       >
         <Form
           form={form}

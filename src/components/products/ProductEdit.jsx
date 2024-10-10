@@ -18,7 +18,7 @@ const ProductEdit = ({ product, onProductUpdate }) => {
   const [form] = Form.useForm();
 
   const handleUpdateProduct = async (values) => {
-    console.log('Producto actual antes de enviar:', { ...product, ...values });
+    //console.log('Producto actual antes de enviar:', { ...product, ...values });
     const updatedValues = {
       ...values,
       price: parseFloat(values.price),
@@ -28,7 +28,7 @@ const ProductEdit = ({ product, onProductUpdate }) => {
     };
     try {
       const updatedProduct = await window.api.editProduct(product.id, updatedValues);
-      console.log('Respuesta del servidor:', updatedProduct);
+      //console.log('Respuesta del servidor:', updatedProduct);
       if (updatedProduct && !updatedProduct.error) {
         setIsModalOpen(false);
         if (onProductUpdate) {
@@ -49,6 +49,7 @@ const ProductEdit = ({ product, onProductUpdate }) => {
 
   const handleOk = () => {
     form.submit();
+    setIsModalOpen(false);
   };
 
   const handleCancel = () => {
@@ -65,6 +66,8 @@ const ProductEdit = ({ product, onProductUpdate }) => {
         open={isModalOpen}
         onOk={handleOk}
         onCancel={handleCancel}
+        okText="Guardar"
+        cancelText="Cancelar"
       >
         <Form
           form={form}

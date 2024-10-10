@@ -25,12 +25,12 @@ function createWindow() {
 }
 
 app.whenReady().then(() => {
-  createWindow();
   productRoutes();
   salesRoutes();
   purchasesRoutes();
   suppliersRoutes();
   remindersRoutes();
+  createWindow();
 
   app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) {

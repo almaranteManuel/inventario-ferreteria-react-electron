@@ -14,6 +14,7 @@ contextBridge.exposeInMainWorld('api', {
   getProductById: (id) => ipcRenderer.invoke('get-product-by-id', id),
   searchProducts: (query) => ipcRenderer.invoke('search-products', query),
   deleteProduct: (id) => ipcRenderer.invoke('deleteProduct', id),
+  countProducts: () => ipcRenderer.invoke('count-products'),
 
   /////// RECORDATORIOS /////// 
   loadReminders: () => ipcRenderer.invoke('load-reminders'),

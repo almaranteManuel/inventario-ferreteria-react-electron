@@ -1,25 +1,30 @@
 import React, { useEffect, useState } from 'react';
 import { Table, Button, Space } from 'antd';
+import PurchaseCreate from './PurchaseCreate';
 
 const PurchaseList = () => {
   const [purchases, setPurchases] = useState([]);
 
 
   // Función para cargar productos desde la API de Electron
+  const loadPurchases = async () => {
+    try {
+      const PurchaseList = await window.api.loadPurchases();
+      //console.log(PurchaseList);
+      setPurchases(PurchaseList);
+
+    } catch (error) {
+      console.error('Error loading suppliers:', error);
+    }
+  };
+
   useEffect(() => {
-    const loadPurchases = async () => {
-      try {
-        const PurchaseList = await window.api.loadPurchases();
-        //console.log(PurchaseList);
-        setPurchases(PurchaseList);
-
-      } catch (error) {
-        console.error('Error loading suppliers:', error);
-      }
-    };
-
     loadPurchases();
   }, []);
+
+  const handlePurchaseAdded = async () => {
+    await loadPurchases();
+  };
 
   // Define las columnas de la tabla
   const columns = [
@@ -52,6 +57,7 @@ const PurchaseList = () => {
 
   return (
   <>
+  <PurchaseCreate onPurchaseAdded={handlePurchaseAdded} />
   <Table columns={columns} dataSource={purchases} pagination={{ pageSize: 20 }} rowHoverable={true} />
   </>
   );

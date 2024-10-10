@@ -13,7 +13,7 @@ const Records = () => {
     const loadReminders = async () => {
         try {
             const remindersData = await window.api.loadReminders();
-            console.log('Recordatorios cargados:', remindersData);
+            //console.log('Recordatorios cargados:', remindersData);
             setReminders(remindersData);
         } catch (error) {
             console.error('Error loading products:', error);
@@ -65,7 +65,7 @@ const Records = () => {
     const dateCellRender = (current) => {
         const listData = getListData(current);
         return (
-            <ul className="events">
+            <ul className="events" style={{listStyle: 'none', margin: 0, padding: 0}}>
                 {listData.map(item => (
                     <li key={item.id}>
                         <Badge status={item.status === 'pending' ? 'warning' : 'success'} text={item.description} />
@@ -77,6 +77,7 @@ const Records = () => {
 
     return (
         <>
+            <h1 style={{textAlign: 'center'}}>Recordatorios</h1>
             <Calendar cellRender={dateCellRender} onSelect={handleDateClick} />
             <Modal
                 title="Agregar Recordatorio"

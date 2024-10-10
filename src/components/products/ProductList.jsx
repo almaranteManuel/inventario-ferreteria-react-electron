@@ -10,7 +10,6 @@ const ProductList = () => {
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [pagination, setPagination] = useState({ current: 1, pageSize: 20 });
-  const [editingProduct, setEditingProduct] = useState(null);
 
   // Función para cargar productos desde la API de Electron
   const loadProducts = async () => {
@@ -37,7 +36,7 @@ const ProductList = () => {
 
   // Actualiza los resultados de la búsqueda
   const handleSearchResults = (results) => {
-    console.log('Resultados de la búsqueda:', results);
+    //console.log('Resultados de la búsqueda:', results);
   
     if (results.length === 0) {
       setFilteredProducts([]); // Si no hay resultados, muestra una lista vacía
