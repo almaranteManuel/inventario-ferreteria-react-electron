@@ -24,4 +24,4 @@ dist-ssr
 *.sw?
 
 # folders
-backend\models\data
+backend/
