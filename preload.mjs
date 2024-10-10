@@ -15,8 +15,9 @@ contextBridge.exposeInMainWorld('api', {
   searchProducts: (query) => ipcRenderer.invoke('search-products', query),
   deleteProduct: (id) => ipcRenderer.invoke('deleteProduct', id),
 
-  /////// CATEGORIAS ///////
-  loadCategories: () => ipcRenderer.invoke('load-categories'),
+  /////// RECORDATORIOS /////// 
+  loadReminders: () => ipcRenderer.invoke('load-reminders'),
+  addReminder: (reminderData) => ipcRenderer.invoke('add-reminder', reminderData),
 
   /////// VENTAS ///////
   loadSales: () => ipcRenderer.invoke('loadSales'),

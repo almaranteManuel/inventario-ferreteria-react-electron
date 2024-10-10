@@ -1,6 +1,4 @@
 import ProductList from '../components/products/ProductList';
-import ProductCreate from '../components/products/ProductCreate';
-
 
 const Products = () => {
   return (

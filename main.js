@@ -4,6 +4,7 @@ import productRoutes from './backend/routes/productRoutes.js';
 import salesRoutes from './backend/routes/saleRoutes.js';
 import purchasesRoutes from './backend/routes/purchaseRoutes.js';
 import suppliersRoutes from './backend/routes/supplierRoutes.js';
+import remindersRoutes from './backend/routes/reminderRoutes.js';
 
 function createWindow() {
   const win = new BrowserWindow({
@@ -29,6 +30,7 @@ app.whenReady().then(() => {
   salesRoutes();
   purchasesRoutes();
   suppliersRoutes();
+  remindersRoutes();
 
   app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) {

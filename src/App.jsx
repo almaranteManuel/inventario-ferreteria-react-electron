@@ -4,6 +4,8 @@ import {
   CreditCardOutlined,
   TruckOutlined,
   ShoppingCartOutlined,
+  BarChartOutlined,
+  CalendarOutlined,
 } from '@ant-design/icons';
 import { Layout, Menu, theme, ConfigProvider } from 'antd';
 import { Link, BrowserRouter as Router, Route, Routes } from 'react-router-dom';
@@ -12,6 +14,7 @@ import Suppliers from './pages/Suppliers';
 import Sales from './pages/Sales';
 import Purchases from './pages/Purchases';
 import Reports from './pages/Reports';
+import Records from './pages/Records';
 import locale from 'antd/es/locale/es_ES';
 import 'moment/locale/es';
 import './App.css';
@@ -45,7 +48,8 @@ const items = [
   getItem(<Link to="/Suppliers">Proveedores</Link>, '2', <TruckOutlined />),
   getItem(<Link to="/Sales">Ventas</Link>, '3', <CreditCardOutlined />),
   getItem(<Link to="/Purchases">Compras</Link>, '4', <ShoppingCartOutlined />),
-  getItem(<Link to="/Reports">Reportes</Link>, '5', <ShoppingCartOutlined />),
+  getItem(<Link to="/Reports">Reportes</Link>, '5', <BarChartOutlined />),
+  getItem(<Link to="/Records">Notas/Recordatorios</Link>, '6', <CalendarOutlined />),
 ];
 
 const App = () => {
@@ -84,6 +88,7 @@ const App = () => {
                 <Route path="/Sales" element={<Sales />} />
                 <Route path="/Purchases" element={<Purchases />} />
                 <Route path="/Reports" element={<Reports />} />
+                <Route path="/Records" element={<Records />} />
               </Routes>
             </Content>
           </Layout>
