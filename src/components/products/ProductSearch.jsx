@@ -24,7 +24,7 @@ const ProductSearch = ({ onSearchResults }) => {
 
   return (
     <>
-        <Typography.Title level={5}>Buscar:</Typography.Title>
+        <Typography.Title level={5} style={{padding: 10}}>Buscar:</Typography.Title>
         <Input
             placeholder="Buscar producto por codigo"
             value={searchTerm}

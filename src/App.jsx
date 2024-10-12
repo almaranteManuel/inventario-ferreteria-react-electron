@@ -44,11 +44,11 @@ function getItem(label, key, icon, children) {
 
 // Ítems del menú
 const items = [
-  getItem(<Link to="/Products">Productos</Link>, '1', <BarsOutlined />),
-  getItem(<Link to="/Suppliers">Proveedores</Link>, '2', <TruckOutlined />),
-  getItem(<Link to="/Sales">Ventas</Link>, '3', <CreditCardOutlined />),
-  getItem(<Link to="/Purchases">Compras</Link>, '4', <ShoppingCartOutlined />),
-  getItem(<Link to="/Reports">Reportes</Link>, '5', <BarChartOutlined />),
+  getItem(<Link to="/Reports">Inicio</Link>, '1', <BarChartOutlined />),
+  getItem(<Link to="/Products">Productos</Link>, '2', <BarsOutlined />),
+  getItem(<Link to="/Suppliers">Proveedores</Link>, '3', <TruckOutlined />),
+  getItem(<Link to="/Sales">Ventas</Link>, '4', <CreditCardOutlined />),
+  getItem(<Link to="/Purchases">Compras</Link>, '5', <ShoppingCartOutlined />),
   getItem(<Link to="/Records">Notas/Recordatorios</Link>, '6', <CalendarOutlined />),
 ];
 
@@ -76,18 +76,17 @@ const App = () => {
             {/* Content principal */}
             <Content
               style={{
-                padding: 24,
                 background: colorBgContainer,
-                flexGrow: 1, // Para que ocupe todo el espacio restante
+                flexGrow: 1,
               }}
             >
               {/* Rutas del contenido */}
               <Routes>
+                <Route path="/Reports" element={<Reports />} />
                 <Route path="/Products" element={<Products />} />
                 <Route path="/Suppliers" element={<Suppliers />} />
                 <Route path="/Sales" element={<Sales />} />
                 <Route path="/Purchases" element={<Purchases />} />
-                <Route path="/Reports" element={<Reports />} />
                 <Route path="/Records" element={<Records />} />
               </Routes>
             </Content>

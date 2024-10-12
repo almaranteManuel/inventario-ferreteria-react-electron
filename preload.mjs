@@ -44,4 +44,5 @@ contextBridge.exposeInMainWorld('api', {
   editSupplier: (id, supplierData) => ipcRenderer.invoke('editSupplier', id, supplierData),
   getSupplierById: (id) => ipcRenderer.invoke('get-supplier-by-id', id),
   deleteSupplier: (id) => ipcRenderer.invoke('deleteSupplier', id),
+  countSuppliers: () => ipcRenderer.invoke('count-suppliers'),
 });

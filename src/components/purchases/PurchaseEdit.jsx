@@ -1,6 +1,7 @@
 import { InfoCircleOutlined } from "@ant-design/icons";
 import { Button, Form, Input, Tag, Modal, DatePicker, Select } from "antd";
 import { useState, useEffect } from "react";
+import dayjs from 'dayjs';
 
 const customizeRequiredMark = (label, { required }) => (
   <>
@@ -17,7 +18,7 @@ const onChange = (date, dateString) => {
   console.log(date, dateString);
 };
 
-const PurchaseCreate = ({ onPurchaseAdded }) => {
+const PurchaseUpdate = ({ purchase, onPurchaseEdit }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [suppliers, setSuppliers] = useState([]);
   const [form] = Form.useForm();
@@ -35,29 +36,33 @@ const PurchaseCreate = ({ onPurchaseAdded }) => {
     loadSuppliers();
   }, []);
 
-  const handleAddPurchase = async (values) => {
+  const handleUpdatePurchase = async (values) => {
     try {
-      const formattedValues = {
+      const updatedValues = {
         ...values,
         date: values.date ? values.date.toISOString() : null,
       };
-
-      const createSale = await window.api.addPurchase(formattedValues);
-      if (createSale) {
+      const updatedPurchase = await window.api.editPurchase(
+        purchase.id,
+        updatedValues
+      );
+      if (updatedPurchase) {
         setIsModalOpen(false);
-        form.resetFields();
-        if (onPurchaseAdded) {
-          onPurchaseAdded();  // Se llama correctamente después de la creación
+        if (onPurchaseEdit) {
+          onPurchaseEdit();
         }
       }
     } catch (error) {
-      console.error("Error al agregar venta:", error);
+      console.error("Error al actualizar la compra:", error);
     }
   };
 
-
   const showModal = () => {
     setIsModalOpen(true);
+    form.setFieldsValue({
+        ...purchase,
+        date: purchase.date ? dayjs(purchase.date) : null
+    });
   };
 
   const handleOk = () => {
@@ -72,15 +77,13 @@ const PurchaseCreate = ({ onPurchaseAdded }) => {
   return (
     <>
       <Button
-        color="default"
-        variant="solid"
         onClick={showModal}
         style={{ margin: 10 }}
       >
-        Agregar compra
+        Editar
       </Button>
       <Modal
-        title="Agregar compra"
+        title="Editar compra"
         open={isModalOpen}
         onOk={handleOk}
         onCancel={handleCancel}
@@ -91,7 +94,7 @@ const PurchaseCreate = ({ onPurchaseAdded }) => {
           form={form}
           layout="vertical"
           requiredMark={customizeRequiredMark}
-          onFinish={handleAddPurchase}
+          onFinish={handleUpdatePurchase}
         >
           <Form.Item
             label="Fecha de la compra"
@@ -115,13 +118,13 @@ const PurchaseCreate = ({ onPurchaseAdded }) => {
             required
             tooltip="Selecciona el proveedor"
           >
-          <Select placeholder="Selecciona un proveedor">
-            {suppliers.map((supplier) => (
-              <Select.Option key={supplier.id} value={supplier.id}>
-                {supplier.name}
-              </Select.Option>
-            ))}
-          </Select>
+            <Select placeholder="Selecciona un proveedor">
+              {suppliers.map((supplier) => (
+                <Select.Option key={supplier.id} value={supplier.id}>
+                  {supplier.name}
+                </Select.Option>
+              ))}
+            </Select>
           </Form.Item>
         </Form>
         
@@ -130,4 +133,4 @@ const PurchaseCreate = ({ onPurchaseAdded }) => {
   );
 };
 
-export default PurchaseCreate;
+export default PurchaseUpdate;
