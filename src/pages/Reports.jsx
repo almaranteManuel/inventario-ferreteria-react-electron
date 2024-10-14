@@ -6,6 +6,7 @@ import {
   ShoppingCartOutlined,
   UserOutlined,
 } from '@ant-design/icons';
+import SalesBalance from '../components/sales/SalesBalance';
 
 function DashboardCard({ title, value, icon }) {
   return (
@@ -22,6 +23,7 @@ function Reports() {
   const [countProducts, setCountProducts] = useState(0);
   const [countSuppliers, setCountSuppliers] = useState(0);
   const [totalSalesYear, setTotalSalesYear] = useState(0);
+  const [totalPurchasesYear, setTotalPurchasesYear] = useState(0);
   const currentYear = new Date().getFullYear();
 
   const loadCountProducts = async () => {
@@ -52,62 +54,82 @@ function Reports() {
     }
   };
 
+  const loadTotalPurchasesYear = async () => {
+    const year = new Date().getFullYear();
+    try {
+      const response = await window.api.getPurchaseByYear(year);
+      setTotalPurchasesYear(response.totalYearlyPurchases);
+    } catch (error) {
+      console.error('Error al obtener el total de compras del año:', error);
+    }
+  }
+
   useEffect(() => {
     loadCountProducts();
     loadCountSuppliers();
     loadTotalSalesYear();
+    loadTotalPurchasesYear();
   }, []);
 
   return (
     <>
       <h1 style={{ textAlign: 'center' }}>Inicio</h1>
-      <div style={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap' }}>
-        <Space direction="horizontal">
-          <DashboardCard
-            icon={<ShoppingCartOutlined
-              style={{
-                color: "green",
-                backgroundColor: "rgba(0,255,0,0.25)",
-                borderRadius: 20,
-                fontSize: 24,
-                padding: 8,
-              }} />}
-              title={`Total compras del año ${currentYear}`} />
-          <DashboardCard
-            icon={<DollarCircleOutlined
-              style={{
-                color: "blue",
-                backgroundColor: "rgba(0,0,255,0.25)",
-                borderRadius: 20,
-                fontSize: 24,
-                padding: 8,
-              }} />}
-              title={`Total ventas del año ${currentYear}`}
-            value={totalSalesYear} /> {/* Mostrar el total de ventas del año aquí */}
-          <DashboardCard
-            icon={<UserOutlined
-              style={{
-                color: "purple",
-                backgroundColor: "rgba(0,255,255,0.25)",
-                borderRadius: 20,
-                fontSize: 24,
-                padding: 8,
-              }} />}
-            title={"Proveedores"}
-            value={countSuppliers} />
-          <DashboardCard
-            icon={<ShoppingOutlined
-              style={{
-                color: "red",
-                backgroundColor: "rgba(255,0,0,0.25)",
-                borderRadius: 20,
-                fontSize: 24,
-                padding: 8,
-              }} />}
-            title={"Productos"}
-            value={countProducts} />
-        </Space>
+      <div 
+        style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
+          gap: '16px',
+          justifyContent: 'center',
+          margin: '16px',
+        }}
+      >
+        <DashboardCard
+          icon={<ShoppingCartOutlined
+            style={{
+              color: "green",
+              backgroundColor: "rgba(0,255,0,0.25)",
+              borderRadius: 20,
+              fontSize: 24,
+              padding: 8,
+            }} />}
+          title={`Total compras del año ${currentYear}`}
+          value={totalPurchasesYear.toFixed(2)} />
+        <DashboardCard
+          icon={<DollarCircleOutlined
+            style={{
+              color: "blue",
+              backgroundColor: "rgba(0,0,255,0.25)",
+              borderRadius: 20,
+              fontSize: 24,
+              padding: 8,
+            }} />}
+          title={`Total ventas del año ${currentYear}`}
+          value={totalSalesYear.toFixed(2)} />
+        <DashboardCard
+          icon={<UserOutlined
+            style={{
+              color: "purple",
+              backgroundColor: "rgba(0,255,255,0.25)",
+              borderRadius: 20,
+              fontSize: 24,
+              padding: 8,
+            }} />}
+          title={"Proveedores"}
+          value={countSuppliers} />
+        <DashboardCard
+          icon={<ShoppingOutlined
+            style={{
+              color: "red",
+              backgroundColor: "rgba(255,0,0,0.25)",
+              borderRadius: 20,
+              fontSize: 24,
+              padding: 8,
+            }} />}
+          title={"Productos"}
+          value={countProducts} />
       </div>
+
+      <SalesBalance />
     </>
   );
 }

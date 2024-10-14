@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Table, Button, Space, Modal, Typography, DatePicker } from 'antd';
 import SaleCreate from './SaleCreate';
 import SaleEdit from './SaleEdit';
-import moment from 'moment';
+import moment from 'moment/moment'
+moment.locale('es');
 
 const { Text } = Typography;
 const { confirm } = Modal;

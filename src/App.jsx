@@ -17,12 +17,12 @@ import Reports from './pages/Reports';
 import Records from './pages/Records';
 import locale from 'antd/es/locale/es_ES';
 import 'moment/locale/es';
+
 import './App.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 
-const { Header, Content, Footer, Sider } = Layout;
+const { Header, Content, Sider } = Layout;
 
-// Estilos para el Sider (barra lateral)
 const siderStyle = {
   overflow: 'auto',
   height: '100vh',
@@ -42,7 +42,6 @@ function getItem(label, key, icon, children) {
   };
 }
 
-// Ítems del menú
 const items = [
   getItem(<Link to="/Reports">Inicio</Link>, '1', <BarChartOutlined />),
   getItem(<Link to="/Products">Productos</Link>, '2', <BarsOutlined />),
@@ -80,8 +79,9 @@ const App = () => {
                 flexGrow: 1,
               }}
             >
-              {/* Rutas del contenido */}
+              {/* Rutas */}
               <Routes>
+                <Route path="/" element={<Reports />} />
                 <Route path="/Reports" element={<Reports />} />
                 <Route path="/Products" element={<Products />} />
                 <Route path="/Suppliers" element={<Suppliers />} />
