@@ -8,7 +8,7 @@ import {
   CalendarOutlined,
 } from '@ant-design/icons';
 import { Layout, Menu, theme, ConfigProvider } from 'antd';
-import { Link, BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { Link, HashRouter as Router, Route, Routes } from 'react-router-dom';
 import Products from './pages/Products';
 import Suppliers from './pages/Suppliers';
 import Sales from './pages/Sales';

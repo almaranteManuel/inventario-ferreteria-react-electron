@@ -1,4 +1,3 @@
-import { InfoCircleOutlined } from "@ant-design/icons";
 import { Button, Form, Input, Tag, Modal } from "antd";
 import { useState } from "react";
 
@@ -18,7 +17,6 @@ const ProductEdit = ({ product, onProductUpdate }) => {
   const [form] = Form.useForm();
 
   const handleUpdateProduct = async (values) => {
-    //console.log('Producto actual antes de enviar:', { ...product, ...values });
     const updatedValues = {
       ...values,
       price: parseFloat(values.price),
@@ -28,7 +26,6 @@ const ProductEdit = ({ product, onProductUpdate }) => {
     };
     try {
       const updatedProduct = await window.api.editProduct(product.id, updatedValues);
-      //console.log('Respuesta del servidor:', updatedProduct);
       if (updatedProduct && !updatedProduct.error) {
         setIsModalOpen(false);
         if (onProductUpdate) {

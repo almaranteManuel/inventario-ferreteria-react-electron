@@ -11,12 +11,11 @@ const ProductList = () => {
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [pagination, setPagination] = useState({ current: 1, pageSize: 20 });
 
-  // Función para cargar productos desde la API de Electron
   const loadProducts = async () => {
     try {
       const productList = await window.api.loadProducts();
       setProducts(productList);
-      setFilteredProducts(productList); // Inicialmente muestra todos los productos
+      setFilteredProducts(productList);
     } catch (error) {
       console.error('Error loading products:', error);
     }
@@ -34,26 +33,21 @@ const ProductList = () => {
     await loadProducts();
   };
 
-  // Actualiza los resultados de la búsqueda
   const handleSearchResults = (results) => {
-    //console.log('Resultados de la búsqueda:', results);
-  
     if (results.length === 0) {
-      setFilteredProducts([]); // Si no hay resultados, muestra una lista vacía
+      setFilteredProducts([]);
     } else {
       const formattedResults = results.map((product) => ({
-        ...product.dataValues,  // Accede a los datos dentro de `dataValues`
-        key: product.dataValues.id, // Asegúrate de que cada fila tenga un `key` único
-        retail_price: product.dataValues.price * (product.dataValues.variant || 1.7), // Calcula el precio minorista
+        ...product.dataValues,
+        key: product.dataValues.id,
+        retail_price: product.dataValues.price * (product.dataValues.variant || 1.7),
       }));
-      setFilteredProducts(formattedResults); // Actualiza la lista filtrada
+      setFilteredProducts(formattedResults);
     }
   
-    setPagination({ ...pagination, current: 1 }); // Reiniciar la paginación al realizar una búsqueda
+    setPagination({ ...pagination, current: 1 });
   };
   
-
-  // Manejar la eliminación de productos
   const handleDeleteProduct = async (productId) => {
     try {
       await window.api.deleteProduct(productId);
@@ -65,7 +59,6 @@ const ProductList = () => {
     }
   };
 
-  // Confirmación de eliminación
   const showDeleteConfirm = (productId) => {
     confirm({
       title: '¿Estás seguro de que deseas eliminar este producto?',
@@ -74,7 +67,7 @@ const ProductList = () => {
       okType: 'danger',
       cancelText: 'Cancelar',
       onOk() {
-        handleDeleteProduct(productId); // Eliminar el producto si se confirma
+        handleDeleteProduct(productId);
       },
       onCancel() {
         console.log('Cancelado');
@@ -82,7 +75,6 @@ const ProductList = () => {
     });
   };
 
-  // Define las columnas de la tabla
   const columns = [
     {
       title: 'Código',
@@ -135,7 +127,6 @@ const ProductList = () => {
     },
   ];
 
-  // Maneja la paginación de la tabla
   const handleTableChange = (pagination) => {
     setPagination(pagination);
   };

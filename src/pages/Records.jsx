@@ -9,7 +9,6 @@ const Records = () => {
     const [selectedDate, setSelectedDate] = useState(null);
     const [form] = Form.useForm();
 
-    // Obtener recordatorios del servidor
     const loadReminders = async () => {
         try {
             const remindersData = await window.api.loadReminders();
@@ -24,13 +23,11 @@ const Records = () => {
         loadReminders();
     }, []);
 
-    // Función para mostrar el modal al hacer clic en una fecha
     const handleDateClick = (date) => {
         setSelectedDate(date);
         setIsModalOpen(true);
     };
 
-    // Función para agregar un recordatorio
     const handleAddReminder = async (values) => {
         const newReminder = {
             title: values.title,
@@ -39,29 +36,24 @@ const Records = () => {
             status: values.status,
         };
 
-        // Guardar recordatorio en la base de datos
         const response = await window.api.addReminder(newReminder);
 
         if (!response.error) {
-            // Actualizar lista de recordatorios
             setReminders([...reminders, { ...newReminder, id: response.id }]);
         }
 
-        // Cerrar el modal
         setIsModalOpen(false);
         form.resetFields();
     };
 
-    // Función para renderizar los recordatorios en una fecha
     const getListData = (value) => {
       return reminders.filter(reminder => {
-          const reminderDate = new Date(reminder.due_date).toLocaleDateString('en-CA'); // Convierte a YYYY-MM-DD
-          const calendarDate = value.format('YYYY-MM-DD'); // Formato desde Ant Design (dayjs)
+          const reminderDate = new Date(reminder.due_date).toLocaleDateString('en-CA');
+          const calendarDate = value.format('YYYY-MM-DD');
           return reminderDate === calendarDate;      
       });
     };
   
-    // Renderizado del contenido del calendario
     const dateCellRender = (current) => {
         const listData = getListData(current);
         return (

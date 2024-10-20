@@ -1,4 +1,3 @@
-import { InfoCircleOutlined } from "@ant-design/icons";
 import { Button, Form, Input, Tag, Modal } from "antd";
 import { useState, useEffect } from "react";
 

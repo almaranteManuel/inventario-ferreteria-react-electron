@@ -1,4 +1,3 @@
-import { InfoCircleOutlined } from "@ant-design/icons";
 import { Button, Form, Input, Tag, Modal, DatePicker, Select } from "antd";
 import { useState, useEffect } from "react";
 
@@ -47,7 +46,7 @@ const PurchaseCreate = ({ onPurchaseAdded }) => {
         setIsModalOpen(false);
         form.resetFields();
         if (onPurchaseAdded) {
-          onPurchaseAdded();  // Se llama correctamente después de la creación
+          onPurchaseAdded();
         }
       }
     } catch (error) {

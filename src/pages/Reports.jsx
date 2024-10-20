@@ -93,7 +93,7 @@ function Reports() {
               padding: 8,
             }} />}
           title={`Total compras del año ${currentYear}`}
-          value={totalPurchasesYear.toFixed(2)} />
+          value={typeof totalPurchasesYear === 'number' ? totalPurchasesYear.toFixed(2) : '0.00'} />
         <DashboardCard
           icon={<DollarCircleOutlined
             style={{
@@ -104,7 +104,7 @@ function Reports() {
               padding: 8,
             }} />}
           title={`Total ventas del año ${currentYear}`}
-          value={totalSalesYear.toFixed(2)} />
+          value={typeof totalSalesYear === 'number' ? totalSalesYear.toFixed(2) : '0.00'} />
         <DashboardCard
           icon={<UserOutlined
             style={{

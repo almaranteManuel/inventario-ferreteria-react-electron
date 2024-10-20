@@ -25,9 +25,9 @@ const ProductForm = ({onProductAdded}) => {
       if (createProduct) {
         setIsModalOpen(false);
         setProductCreate(true);
-        form.resetFields(); // Limpia el formulario
+        form.resetFields();
         if (onProductAdded) {
-          onProductAdded(); // Llama la función para actualizar la lista de productos
+          onProductAdded();
         }
       } else {
         productCreate(false);

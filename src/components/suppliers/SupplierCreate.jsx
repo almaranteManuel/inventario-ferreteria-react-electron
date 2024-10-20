@@ -1,4 +1,3 @@
-import { InfoCircleOutlined } from "@ant-design/icons";
 import { Button, Form, Input, Tag, Modal } from "antd";
 import { useState } from "react";
 
@@ -19,7 +18,6 @@ const SupplierCreate = ({onSupplierAdded}) => {
   const [form] = Form.useForm();
 
   const handleAddSupplier = async (values) => {
-    //console.log(values);
     try {
       const createSupplier = await window.api.addSupplier(values);
       if (createSupplier) {

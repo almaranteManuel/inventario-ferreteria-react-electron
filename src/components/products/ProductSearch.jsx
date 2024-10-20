@@ -8,13 +8,12 @@ const ProductSearch = ({ onSearchResults }) => {
     const value = e.target.value;
     setSearchTerm(value);
 
-    // Si el input está vacío, mostrar todos los productos
     if (value === '') {
-      const allProducts = await window.api.loadProducts(); // Llamada a la API para obtener todos los productos
+      const allProducts = await window.api.loadProducts();
       onSearchResults(allProducts);
     } else {
       try {
-        const results = await window.api.searchProducts(value); // Llamada a la API para buscar productos
+        const results = await window.api.searchProducts(value);
         onSearchResults(results);
       } catch (error) {
         console.error('Error searching products:', error);

@@ -12,17 +12,16 @@ const SaleList = () => {
   const [sales, setSales] = useState([]);
   const [filteredInfo, setFilteredInfo] = useState({});
   const [sortedInfo, setSortedInfo] = useState({});
-  const [filteredSales, setFilteredSales] = useState([]); // Inicializa el estado para las ventas filtradas
+  const [filteredSales, setFilteredSales] = useState([]);
   const [totalSales, setTotalSales] = useState(0);
 
-  // Función para cargar ventas desde la API de Electron
   const loadSales = async () => {
     try {
       const saleList = await window.api.loadSales();
       setSales(saleList);
-      setFilteredSales(saleList); // Inicializa filteredSales con todas las ventas
+      setFilteredSales(saleList);
       const total = saleList.reduce((sum, sale) => sum + sale.totalAmount, 0);
-      setTotalSales(total); // Calcula el total al cargar las ventas
+      setTotalSales(total);
     } catch (error) {
       console.error('Error loading sales:', error);
     }
@@ -47,17 +46,17 @@ const SaleList = () => {
 
   const clearFilters = () => {
     setFilteredInfo({});
-    setFilteredSales(sales); // Restablece todas las ventas a su estado original
+    setFilteredSales(sales);
     const total = sales.reduce((sum, sale) => sum + sale.totalAmount, 0);
-    setTotalSales(total); // Calcula el total de ventas original
+    setTotalSales(total);
   };
 
   const clearAll = () => {
     setFilteredInfo({});
     setSortedInfo({});
-    setFilteredSales(sales); // Restablece todas las ventas a su estado original
+    setFilteredSales(sales);
     const total = sales.reduce((sum, sale) => sum + sale.totalAmount, 0);
-    setTotalSales(total); // Calcula el total de ventas original
+    setTotalSales(total);
   };
 
   const onMonthChange = (date, dateString) => {
@@ -70,7 +69,7 @@ const SaleList = () => {
       setTotalSales(total);
     } else {
       setFilteredSales(sales);
-      const total = sales.reduce((sum, sale) => sum + sale.totalAmount, 0); // Calcula el total de todas las ventas
+      const total = sales.reduce((sum, sale) => sum + sale.totalAmount, 0);
       setTotalSales(total);
     }
   };
@@ -79,7 +78,7 @@ const SaleList = () => {
     try {
       const deletedSale = await window.api.deleteSale(saleId);
       if (deletedSale) {
-        await loadSales(); // Recargar ventas después de eliminar una
+        await loadSales();
       }
     } catch (error) {
       console.error('Error al borrar la venta:', error);
@@ -94,7 +93,7 @@ const SaleList = () => {
       okType: 'danger',
       cancelText: 'Cancelar',
       onOk() {
-        handleDeleteSale(saleId); // Eliminar la venta si se confirma
+        handleDeleteSale(saleId);
       },
       onCancel() {
         console.log('Cancelado');
@@ -102,11 +101,10 @@ const SaleList = () => {
     });
   };
 
-  // Define las columnas de la tabla
   const columns = [
     {
       title: 'Fecha',
-      dataIndex: 'date',  // Asegúrate de usar el campo correcto de las ventas
+      dataIndex: 'date',
       key: 'date',
       render: (text) => {
         const formattedDate = new Date(text).toLocaleDateString();
@@ -115,7 +113,7 @@ const SaleList = () => {
     },
     {
       title: 'Total',
-      dataIndex: 'totalAmount',  // Asegúrate de usar el campo correcto de las ventas
+      dataIndex: 'totalAmount',
       key: 'totalAmount',
       sorter: (a, b) => a.totalAmount - b.totalAmount,
       sortOrder: sortedInfo.columnKey === 'totalAmount' ? sortedInfo.order : null,
@@ -157,7 +155,7 @@ const SaleList = () => {
       </Text>
       <Table
         columns={columns}
-        dataSource={filteredSales} // Usa filteredSales como fuente de datos
+        dataSource={filteredSales}
         rowKey={(record) => record.id}
         pagination={{ pageSize: 20 }}
         onChange={handleChange}

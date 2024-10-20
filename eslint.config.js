@@ -7,7 +7,7 @@ import reactRefresh from 'eslint-plugin-react-refresh'
 export default [
   { ignores: ['dist'] },
   {
-    files: ['**/*.{js,jsx}'],
+    files: ['**/*.{js,jsx,mjs,cjs}'],
     languageOptions: {
       ecmaVersion: 2020,
       globals: {
@@ -39,7 +39,7 @@ export default [
     },
   },
   {
-    files: ['electron.js', 'main.js'],
+    files: ['main.mjs'],
     languageOptions: {
       globals: {
         ...globals.node, // Asegúrate de que globals.node esté presente

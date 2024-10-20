@@ -1,4 +1,3 @@
-import { InfoCircleOutlined } from "@ant-design/icons";
 import { Button, Form, Input, Tag, Modal, DatePicker } from "antd";
 import { useState } from "react";
 import dayjs from 'dayjs';

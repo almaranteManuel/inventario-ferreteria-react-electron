@@ -15,13 +15,13 @@ function SalesBalance() {
   const [currentMonth, setCurrentMonth] = useState(moment().format('MM'));
   const [selectedYear, setSelectedYear] = useState(moment().format('YYYY'));
 
-  // Calcular la ganancia (40%) y el costo de mercadería (60%)
+  // Calculamos la ganancia (40%) y el costo de mercadería (60%)
   const calculateProfit = (sales) => sales * 0.4; // 40% de ganancia
   const calculateCost = (sales) => sales * 0.6;   // 60% para cubrir el costo de mercadería
 
-  // Calcular balance de ventas en porcentaje
+  // balance de ventas en porcentaje
   const calculatePercentage = (current, previous) => {
-    if (previous === 0) return current > 0 ? 100 : 0; // Evitar división por 0
+    if (previous === 0) return current > 0 ? 100 : 0; // Evitamos división por 0
     return ((current - previous) / previous) * 100;
   };
 
@@ -36,7 +36,6 @@ function SalesBalance() {
 
       setSalesData(response.monthlySales);
       
-      // Cargar ventas del mes actual al montar el componente
       const currentMonthData = response.monthlySales.find(item => item.month === currentMonth);
       const previousMonthData = response.monthlySales.find(item => item.month === moment().subtract(1, 'months').format('MM'));
 
@@ -57,7 +56,7 @@ function SalesBalance() {
     <div style={{marginTop: 30, paddingInline: 15}}>
       <Text mark>Los balances y ganancias se calculan como el 40% de las ventas totales, mientras que el 60% cubre los costos de la mercadería vendida.</Text>
       <Row gutter={16} style={{ marginTop: 20, justifyContent: 'center' }}>
-        {/* Card de balance mensual */}
+
         <Col span={6}>
           <Card bordered={true} style={{ width: 300, backgroundColor: '#ccc' }}>
             <Statistic
@@ -79,7 +78,6 @@ function SalesBalance() {
           </Card>
         </Col>
 
-        {/* Card de balance anual */}
         <Col span={6}>
           <Card bordered={true} style={{ width: 300, backgroundColor: '#ccc' }}>
             <Statistic
@@ -111,8 +109,8 @@ function SalesBalance() {
         dataSource={salesData}
         renderItem={item => {
             const totalSales = item.totalSales;
-            const costOfGoods = calculateCost(totalSales);  // 60% para el costo de mercadería
-            const profit = calculateProfit(totalSales);     // 40% para la ganancia
+            const costOfGoods = calculateCost(totalSales);
+            const profit = calculateProfit(totalSales);
 
             return (
             <List.Item>

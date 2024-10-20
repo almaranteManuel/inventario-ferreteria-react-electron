@@ -8,8 +8,6 @@ const { confirm } = Modal;
 const SupplierList = () => {
   const [suppliers, setSuppliers] = useState([]);
 
-
-  // Función para cargar productos desde la API de Electron
   const loadSuppliers = async () => {
     try {
       const SupplierList = await window.api.loadSuppliers();
@@ -61,7 +59,6 @@ const SupplierList = () => {
     });
   };
 
-  // Define las columnas de la tabla
   const columns = [
     {
       title: 'Nombre',

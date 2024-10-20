@@ -1,4 +1,5 @@
-import { contextBridge, ipcRenderer } from "electron";
+//import { contextBridge, ipcRenderer } from "electron";
+const { contextBridge, ipcRenderer } = require('electron');
 
 // contextBridge.exposeInMainWorld('darkMode', {
 //   toggle: () => ipcRenderer.invoke('dark-mode:toggle'),
@@ -15,6 +16,7 @@ contextBridge.exposeInMainWorld('api', {
   searchProducts: (query) => ipcRenderer.invoke('search-products', query),
   deleteProduct: (id) => ipcRenderer.invoke('deleteProduct', id),
   countProducts: () => ipcRenderer.invoke('count-products'),
+  updateVariants: () => ipcRenderer.invoke('update-variant-products'),
 
   /////// RECORDATORIOS /////// 
   loadReminders: () => ipcRenderer.invoke('load-reminders'),

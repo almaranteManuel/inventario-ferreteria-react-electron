@@ -15,13 +15,10 @@ const PurchaseList = () => {
   const [filteredPurchases, setFilteredPurchases] = useState([]);
   const [totalPurchases, setTotalPurchases] = useState(0);
 
-  // Función para cargar productos desde la API de Electron
   const loadPurchases = async () => {
     try {
       const PurchaseList = await window.api.loadPurchases();
       setPurchases(PurchaseList);
-
-      // Calcular el total de todas las compras al cargar
       const total = PurchaseList.reduce((sum, sale) => sum + sale.totalAmount, 0);
       setTotalPurchases(total);
     } catch (error) {
@@ -48,9 +45,9 @@ const PurchaseList = () => {
 
   const clearFilters = () => {
     setFilteredInfo({});
-    setFilteredPurchases(purchases); // Restablece todas las ventas a su estado original
+    setFilteredPurchases(purchases);
     const total = purchases.reduce((sum, sale) => sum + sale.totalAmount, 0);
-    setTotalPurchases(total); // Calcula el total de compras original
+    setTotalPurchases(total);
   };
 
   const clearAll = () => {
@@ -58,7 +55,7 @@ const PurchaseList = () => {
     setSortedInfo({});
     setFilteredPurchases(purchases);
     const total = purchases.reduce((sum, sale) => sum + sale.totalAmount, 0);
-    setTotalPurchases(total); // Calcula el total de compras original
+    setTotalPurchases(total);
   };
 
   const onMonthChange = (date, dateString) => {
@@ -72,7 +69,7 @@ const PurchaseList = () => {
     } else {
       setFilteredPurchases(purchases);
       const total = purchases.reduce((sum, sale) => sum + sale.totalAmount, 0);
-      setTotalPurchases(total); // Mostrar el total si no se selecciona un mes
+      setTotalPurchases(total);
     }
   };
 
@@ -104,7 +101,6 @@ const PurchaseList = () => {
     });
   };
 
-  // Define las columnas de la tabla
   const columns = [
     {
       title: 'Fecha',
@@ -117,13 +113,13 @@ const PurchaseList = () => {
     },
     {
       title: 'Proveedor',
-      dataIndex: ['Supplier', 'name'],  // Acceder al nombre del proveedor anidado en el objeto Supplier
+      dataIndex: ['Supplier', 'name'],
       key: 'supplier_name',
       render: (text) => <span style={{ fontWeight: 'bold', color: '#333' }}>{text}</span>,
     },
     {
       title: 'Total',
-      dataIndex: 'totalAmount',  // Asegúrate de usar el campo correcto de las ventas
+      dataIndex: 'totalAmount',
       key: 'totalAmount',
       sorter: (a, b) => a.totalAmount - b.totalAmount,
       sortOrder: sortedInfo.columnKey === 'totalAmount' ? sortedInfo.order : null,
@@ -161,7 +157,7 @@ const PurchaseList = () => {
     </Space>
     <br />
     <Text strong style={{paddingInline: 10, fontSize: 20}}>Total compras: ${totalPurchases.toFixed(2)}</Text>
-    <Table columns={columns} dataSource={purchases} rowKey={(record) => record.id} pagination={{ pageSize: 20 }} rowHoverable={true} />
+    <Table columns={columns} dataSource={purchases} rowKey={(record) => record.id} pagination={{ pageSize: 20 }} rowHoverable={true} onChange={handleChange} />
   </>
   );
 };
