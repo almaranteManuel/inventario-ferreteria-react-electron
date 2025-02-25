@@ -13,7 +13,7 @@ contextBridge.exposeInMainWorld('api', {
   addProduct: (productData) => ipcRenderer.invoke('add-product', productData),
   editProduct: (id, productData) => ipcRenderer.invoke('editProduct', id, productData),
   getProductById: (id) => ipcRenderer.invoke('get-product-by-id', id),
-  searchProducts: (query) => ipcRenderer.invoke('search-products', query),
+  searchByCodeOrDescription: (query) => ipcRenderer.invoke('search-products', query),
   deleteProduct: (id) => ipcRenderer.invoke('deleteProduct', id),
   countProducts: () => ipcRenderer.invoke('count-products'),
   updateVariants: () => ipcRenderer.invoke('update-variant-products'),
@@ -21,6 +21,8 @@ contextBridge.exposeInMainWorld('api', {
   /////// RECORDATORIOS /////// 
   loadReminders: () => ipcRenderer.invoke('load-reminders'),
   addReminder: (reminderData) => ipcRenderer.invoke('add-reminder', reminderData),
+  updateReminder: (id, updatedData) => ipcRenderer.invoke('update-reminder', id, updatedData),
+  deleteReminder: (id) => ipcRenderer.invoke('delete-reminder', id),
 
   /////// VENTAS ///////
   loadSales: () => ipcRenderer.invoke('loadSales'),

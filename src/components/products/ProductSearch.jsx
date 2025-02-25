@@ -13,7 +13,7 @@ const ProductSearch = ({ onSearchResults }) => {
       onSearchResults(allProducts);
     } else {
       try {
-        const results = await window.api.searchProducts(value);
+        const results = await window.api.searchByCodeOrDescription(value);
         onSearchResults(results);
       } catch (error) {
         console.error('Error searching products:', error);
@@ -25,7 +25,7 @@ const ProductSearch = ({ onSearchResults }) => {
     <>
         <Typography.Title level={5} style={{padding: 10}}>Buscar:</Typography.Title>
         <Input
-            placeholder="Buscar producto por codigo"
+            placeholder="Buscar producto por codigo o descripción"
             value={searchTerm}
             onChange={handleSearch}
         />

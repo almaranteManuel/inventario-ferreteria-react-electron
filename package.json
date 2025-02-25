@@ -1,7 +1,7 @@
 {
-  "name": "intentario-ferreteria",
+  "name": "cachito-ferreteria",
   "private": true,
-  "version": "0.0.1",
+  "version": "0.0.3",
   "type": "module",
   "main": "main.mjs",
   "authors": "Manuel Almarante",
@@ -49,6 +49,9 @@
   },
   "config": {
     "forge": {
+      "packagerConfig": {
+        "icon": "src/assets/cachito_icon"
+      },
       "makers": [
         {
           "name": "@electron-forge/maker-squirrel",
